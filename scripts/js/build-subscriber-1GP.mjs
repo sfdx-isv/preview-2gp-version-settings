@@ -49,8 +49,8 @@ export async function buildSubscriber1GP(firstVersionNum, lastVersionNum) {
   const orgDescription       = '2GP Subscriber Test scratch org';
   const orgConfigFile        = 'config/project-scratch-def.json';
   const packageName          = 'AVP Test Package';
-  const packageVersionIds    = ['04tal000000LPkz', '04tal000000LS7l', '04tal000000LTOn', '04tal000000LdJJ', '04tal000000MxmD', '04tal000000RXJF'];
-  const packageVersionNames  = ['ver 1.0 (1GP)', 'ver 2.0 (1GP)', 'ver 3.0 (1GP)', 'ver 4.0 (1GP)', 'ver 5.0 (1GP)', 'ver 6.0 (1GP)'];
+  const packageVersionIds    = ['04tal000000LPkz', '04tal000000LS7l', '04tal000000LTOn', '04tal000000LdJJ', '04tal000000MxmD', '04tal00000143DF'];
+  const packageVersionNames  = ['ver 1.0 (1GP)', 'ver 2.0 (1GP)', 'ver 3.0 (1GP)', 'ver 4.0 (1GP)', 'ver 5.0 (1GP)', 'ver 6.0 (1GP)', 'ver 7.0 (1GP)'];
   const firstVersionNumber   = Number.isInteger(firstVersionNum) ? firstVersionNum : 1;
   const lastVersionNumber    = Number.isInteger(lastVersionNum)  ? lastVersionNum : packageVersionIds.length;
   const permissionSetName    = 'v_provider_test__Apex_Version_Provider_Test_Perms';
