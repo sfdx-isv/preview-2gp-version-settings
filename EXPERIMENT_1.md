@@ -6,7 +6,13 @@ When subscriber Apex interacts with global classes from a managed package, the *
 
 In this experiment, you'll see how introducing `@Deprecated` methods via package upgrades can impact compilation of subscriber metadata. You'll see how subscriber classes leverage **Version Settings** to "pin to" global Apex in a specific package version. By the end, you'll have context that will help you understand the gaps that have existed in 2GP, prior to the inclusion of **Version Settings** support in the Winter '25 release.
 
-## Overview
+## Objectives
+
+* Learn how **Package Version** settings impact subscriber Apex with managed 1GP dependencies.
+* Observe how **Package Version** settings can prevent compile errors with subscriber Apex.
+* Observe that behavior of packaged Apex is always driven by the most recent implementation, regardless of **Package Version** settings.
+
+## Step-by-Step Overview
 
 1. Initialize a 1GP subscriber org and directly install package `ver 3.0 (1GP)`.
 2. Deploy subscriber Apex that depends on `global` Apex from package `ver 3.0 (1GP)`.
@@ -16,13 +22,7 @@ In this experiment, you'll see how introducing `@Deprecated` methods via package
 6. Retrieve previously deployed subscriber Apex and observe changes to `.cls-meta.xml` files.
 7. Attempt to redeploy subscriber Apex again and observe success this time.
 
-## Objectives
-
-* ???
-* ???
-* ???
-
-## Instructions
+## Detailed Instructions
 
 1. Initialize a 1GP subscriber org and directly install package `ver 3.0 (1GP)`.
 ```
