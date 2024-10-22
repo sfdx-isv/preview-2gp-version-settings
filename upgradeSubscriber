@@ -1,0 +1,4 @@
+#!/bin/bash
+#
+# Proxy for the Node.js-based SFDX Toolbelt.
+./scripts/js/toolbelt.mjs "--UPGRADE-SUB" "$@"
