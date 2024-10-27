@@ -79,10 +79,6 @@ Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the follow
 ```
 ./initSubscriber --2GP --first-version 6 --last-version 6
 ```
-5. Attempt to deploy `Experiment_2*` subscriber classes and observe errors.
-```
-sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
-```
 
 
 
