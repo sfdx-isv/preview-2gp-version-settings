@@ -36,22 +36,45 @@ You will see how introducing `@Deprecated` methods via package upgrades **has no
 **NOTE:** The following were `@Deprecated` in `ver 5.0 (2GP)`:
 * The method `methodAltTwo(Integer, String)` inside the `v_provider_test__GlobalConcreteTwo` class.
 * The entire `v_provider_test__GlobalAbstractOne` class.
+
 ---
 
 #### 2. Deploy `Experiment_2*` subscriber classes.
 ```
 sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
 ```
-**NOTE:** The `Experiment_2*` subscriber classes depend on packaged Apex `@Deprecated` in `ver 5.0 (2GP)`.
-* In 1GP, this would result in an Apex compile error.
-* In 2GP without 
+**NOTE:** The `Experiment_2*` subscriber classes depend on packaged Apex that's `@Deprecated` in `ver 5.0 (2GP)`.
+* In 1GP, this deployment would result in an Apex compile error.
+* In 2GP without **Version Settings** support, ALL global packaged Apex is visible to the subscriber, even when `@Deprecated`.
+
 ---
 
+#### 3. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
+Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
+1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (2GP)` package.
+2. The class summary shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
+3. The **"Available in Versions"** section is missing completely.
 
-3. Execute `Experiment_2.apex` showing only `USER_DEBUG` log lines.
+![GlobalConcreteTwo Class Summary](images/Packaged_Apex_Class_Detail_2GP.png)
+
+---
+
+#### 4. Execute `Experiment_2.apex` showing only `USER_DEBUG` log lines.
 ```
 sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
 ```
+**Observations:** 
+* Just as with 1GP, the packaged-global Apex is always implemented by logic in the most recently installed package version.
+
+---
+
+#### 5. View the Class Summary for `GlobalConcreteTwo` in Setup.
+Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
+1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (2GP)` package.
+
+
+
+
 4. Initialize a **new** 2GP subscriber org and directly install package `ver 6.0 (2GP)`.
 ```
 ./initSubscriber --2GP --first-version 6 --last-version 6
