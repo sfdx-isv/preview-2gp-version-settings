@@ -1,14 +1,19 @@
-# Experiment One: Subscriber Apex Depending on 1GP
+# Experiment Two: Subscriber Apex Depending on 2GP WITHOUT VPI Enabled
 
-This experiment demonstrates how Salesforce’s “Package Versions” feature affects subscriber Apex in first-generation managed packages (1GP). 
+This experiment demonstrates subscriber Apex interacting with global classes in package versions without **Version Settings** support.
 
-When subscriber Apex interacts with global classes from a managed package, the **Version Settings** determine which package version the code is "pinned" to. This helps ensure that subscriber code can maintain expected behavior after package upgrades and gives publishers the option to implement version-specific behavior when demanded by their customers.
+The managed 2GP versions you'll work with in this experiment have the following limitations.
 
-In this experiment, you'll see how introducing `@Deprecated` methods via package upgrades can impact compilation of subscriber metadata. You'll see how subscriber classes leverage **Version Settings** to "pin to" global Apex in a specific package version. By the end, you'll have context that will help you understand the gaps that have existed in 2GP, prior to the inclusion of **Version Settings** support in the Winter '25 release.
+1. Subscriber Apex classes can not be "pinned" to a specific version of the installed 2GP.
+2. Subscriber Visualforce components can not be "pinned" to a specific version of the installed 2GP.
+3. Packaged Apex classes could not use the `System.requestVersion()` method.
+
+You will see how introducing `@Deprecated` methods via package upgrades **has no impact** on the compilation of subscriber metadata, allowing subscribers to build integrations with packaged Apex that publishers have no intention of supporting.
 
 ## Objectives
 
-* Learn how **Package Version** settings impact subscriber Apex with managed 1GP dependencies.
+* Observe how **Package Version Information** 
+* Observe how **Package Version** settings are completely missing  impact subscriber Apex with managed 1GP dependencies.
 * Observe how **Package Version** settings can prevent compile errors with subscriber Apex.
 * Observe that behavior of packaged Apex is always driven by the most recent implementation, regardless of **Package Version** settings.
 
@@ -24,14 +29,25 @@ In this experiment, you'll see how introducing `@Deprecated` methods via package
 
 ## Detailed Instructions
 
-1. Initialize a 2GP subscriber org and directly install package `ver 6.0 (2GP)`.
+#### 1. Initialize a 2GP subscriber org and directly install package `ver 6.0 (2GP)`.
 ```
 ./initSubscriber --2GP --first-version 6 --last-version 6
 ```
-2. Deploy `Experiment_2*` subscriber classes.
+**NOTE:** The following were `@Deprecated` in `ver 5.0 (2GP)`:
+* The method `methodAltTwo(Integer, String)` inside the `v_provider_test__GlobalConcreteTwo` class.
+* The entire `v_provider_test__GlobalAbstractOne` class.
+---
+
+#### 2. Deploy `Experiment_2*` subscriber classes.
 ```
 sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
 ```
+**NOTE:** The `Experiment_2*` subscriber classes depend on packaged Apex `@Deprecated` in `ver 5.0 (2GP)`.
+* In 1GP, this would result in an Apex compile error.
+* In 2GP without 
+---
+
+
 3. Execute `Experiment_2.apex` showing only `USER_DEBUG` log lines.
 ```
 sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
