@@ -43,7 +43,7 @@ sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
 
-![GlobalConcreteTwo Class Summary](images/Experiment_1_Debug_Output_1.png)
+![Experiment 1 Debug Output with ver 4.0 (1GP) installed](images/Experiment_1_Debug_Output_1.png)
 
 ---
 
@@ -66,7 +66,7 @@ Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the follow
 2. Selecting the **All Versions** filter shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
 3. The **"Available in Versions"** section is missing completely.
 
-![GlobalConcreteTwo Class Summary](images/Packaged_Apex_Class_Detail_1GP.png)
+![GlobalConcreteTwo Class Summary (1GP)](images/Packaged_Apex_Class_Detail_1GP.png)
 
 ---
 

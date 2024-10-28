@@ -51,7 +51,7 @@ Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the follow
 2. The class summary shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
 3. The **"Available in Versions"** section is missing completely.
 
-![GlobalConcreteTwo Class Summary](images/Packaged_Apex_Class_Detail_2GP.png)
+![GlobalConcreteTwo Class Summary (2GP)](images/Packaged_Apex_Class_Detail_2GP.png)
 
 ---
 
@@ -62,7 +62,7 @@ sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
 **NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
 * Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
 
-![GlobalConcreteTwo Class Summary](images/Experiment_2_Debug_Output.png)
+![Experiment 2 Debug Output](images/Experiment_2_Debug_Output.png)
 
 ---
 
@@ -72,7 +72,7 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
    * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
 
-![GlobalConcreteTwo Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
+![Experiment_2A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
 
 ---
 
