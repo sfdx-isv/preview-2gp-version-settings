@@ -100,6 +100,14 @@ While still in Edit mode with `Experiment_1A`, attempt the following.
 ```
 sf project retrieve start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
+**NOTE:** Note the following after retrieving the `Experiment_1*` classes
+* Each of the `.cls-meta.xml` files for the `Experiment_1*` classes was modified.
+* Using the source compare view, you can see that `<packageVersions>` metadata is now present in your local source files.
+  * This change will allow you to successfully re-deploy these classes.
+* Note that when `<packageVersions>` metadata refers to a 1GP, it uses `<namespace>` to identify the package.
+  * As you'll see in [Experiment Three](/EXPERIMENT_3.md), the schema for `<packageVersions>` metadata changes slightly when referring to a 2GP.
+
+![Experiment_1A Now Has Version Settings Metadata](images/packageVersions_Metadata_1GP.png)
 
 ---
 
@@ -107,6 +115,7 @@ sf project retrieve start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
+**NOTE:** This deployment attempt should succeed without any compile errors.
 
 ---
 
