@@ -14,44 +14,82 @@ In this experiment, you'll see how introducing `@Deprecated` methods via package
 
 ## Step-by-Step Overview
 
-1. Initialize a 1GP subscriber org and directly install package `ver 3.0 (1GP)`.
-2. Deploy subscriber Apex that depends on `global` Apex from package `ver 3.0 (1GP)`.
-3. Execute anonymous Apex to see what the packaged Apex is doing in `ver 3.0 (1GP)`.
-4. Upgrade directly from `ver 3.0 (1GP)` to `ver 6.0 (1GP)`, introducing `@Deprecated` Apex to the org.
+1. Initialize a 1GP subscriber org and directly install package `ver 4.0 (1GP)`.
+2. Deploy subscriber Apex that depends on `global` Apex from package `ver 4.0 (1GP)`.
+3. Execute anonymous Apex to see what the packaged Apex is doing in `ver 4.0 (1GP)`.
+4. Upgrade directly from `ver 4.0 (1GP)` to `ver 6.0 (1GP)`, introducing `@Deprecated` Apex to the org.
 5. Attempt to redeploy subscriber Apex and observe compilation errors.
 6. Retrieve previously deployed subscriber Apex and observe changes to `.cls-meta.xml` files.
 7. Attempt to redeploy subscriber Apex again and observe success this time.
 
 ## Detailed Instructions
 
-1. Initialize a 1GP subscriber org and directly install package `ver 3.0 (1GP)`.
+#### 1. Initialize a 1GP subscriber org and directly install package `ver 4.0 (1GP)`.
 ```
 ./initSubscriber --1GP --first-version 4 --last-version 4
 ```
-2. Deploy `Experiment_1*` subscriber classes.
+
+---
+
+#### 2. Deploy `Experiment_1*` subscriber classes.
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
-3. Execute `Experiment_1.apex` showing only `USER_DEBUG` log lines.
+
+---
+
+#### 3. Execute `Experiment_1.apex` showing only `USER_DEBUG` log lines.
 ```
 sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
-4. Upgrade to the installed package directly to `ver 6.0 (1GP)`.
+
+---
+
+#### 4. Upgrade to the installed package directly to `ver 6.0 (1GP)`.
 ```
 ./upgradeSubscriber --1GP --first-version 6 --last-version 6
 ```
-5. Redeploy `Experiment_1*` subscriber classes, noting that all classes will fail to deploy.
+
+---
+
+#### 5. Redeploy `Experiment_1*` subscriber classes, noting that all classes will fail to deploy.
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
-6. Retrieve `Experiment_1*` classes from the org. Use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
+---
+
+#### 5A. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
+Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
+1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (1GP)` package.
+2. Selecting the **All Versions** filter shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
+3. The **"Available in Versions"** section is missing completely.
+
+![GlobalConcreteTwo Class Summary](images/Packaged_Apex_Class_Detail_1GP.png)
+
+---
+
+
+#### 5B. View the Class Summary for `Experiment_2A` in Setup.
+```
+sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
+```
+---
+
+
+
+#### 6. Retrieve `Experiment_1*` classes from the org. Use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
 ```
 sf project retrieve start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
-7. Attempt to redeploy the `Experiment_1*` subscriber classes. Note success because the `.cls-meta.xml` files contain `<packageVersions>` information that "pins" each subscriber class to a specific managed package version.
+
+---
+
+#### 7. Attempt to redeploy the `Experiment_1*` subscriber classes. Note success because the `.cls-meta.xml` files contain `<packageVersions>` information that "pins" each subscriber class to a specific managed package version.
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
+
+---
 
 ## Key Takeaways
 * Applying **Version Settings** to a subscriber class impacts the compilation of the subscriber class.

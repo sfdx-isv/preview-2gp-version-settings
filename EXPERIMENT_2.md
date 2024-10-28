@@ -78,7 +78,7 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 
 ## Key Takeaways
 * Prior to adding **Version Settings** support to 2GP, ALL packaged Apex was visible to subscribers, even `@Deprecated` Apex.
-* Subscribers had no way of knowing which parts of a Global Apex class a publisher may have deprecated.
+* Subscribers had no way of knowing which parts of a Global Apex class a publisher had marked as `@Deprecated`.
 * As with 1GP, the logic executed by packaged Apex is always implemented by the most recent version.
   * This was confirmed by observing debug output starting with the digit `6` because the implementation was inside `ver 6.0 (2GP)`.
 * Prior to adding **Version Settings** support to 2GP, publishers were unable to add provides backward-compatible output to subscribers because the `System.requestVersion()` method was unavailable in 2GP.
