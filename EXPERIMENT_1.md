@@ -43,6 +43,8 @@ sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
 
+![GlobalConcreteTwo Class Summary](images/Experiment_1_Debug_Output_1.png)
+
 ---
 
 #### 4. Upgrade to the installed package directly to `ver 6.0 (1GP)`.
