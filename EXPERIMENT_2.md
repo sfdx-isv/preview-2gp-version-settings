@@ -1,16 +1,15 @@
-# Experiment Two: Subscriber Apex Depending on 2GP WITHOUT VPI Enabled
+# Experiment Two: Subscriber Apex Depending on 2GP Without "Version Settings" Support
 
-This experiment demonstrates subscriber Apex interacting with global classes in package versions without **Version Settings** support.
+This experiment demonstrates subscriber Apex interacting with global classes in a package version without **Version Settings** support.
 
-The managed 2GP versions you'll work with in this experiment have the following limitations.
+Managed 2GPs without **Version Settings** support have the following limitations:
 
-1. Subscriber Apex classes can not be "pinned" to a specific version of the installed 2GP.
-2. Subscriber Visualforce components can not be "pinned" to a specific version of the installed 2GP.
-3. Packaged Apex classes could not use the `System.requestVersion()` method.
+1. Subscriber Apex classes and Visualforce components cannot be "pinned" to a specific version of the 2GP.
+2. Package versions that introduce `@Deprecated` Apex have no impact on the compilation of subscriber metadata.
+   * This allows subscribers to build integrations with packaged Apex that publishers have no intention of supporting.
+3. Packaged Apex classes can not use the `System.requestVersion()` method.
 
-You will see how introducing `@Deprecated` methods via package upgrades **has no impact** on the compilation of subscriber metadata, allowing subscribers to build integrations with packaged Apex that publishers have no intention of supporting.
-
-## Objectives
+## Objectives of this Experiment
 
 * Observe how **Package Version Information** 
 * Observe how **Package Version** settings are completely missing  impact subscriber Apex with managed 1GP dependencies.
@@ -43,7 +42,7 @@ You will see how introducing `@Deprecated` methods via package upgrades **has no
 ```
 sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
 ```
-**NOTE:** The `Experiment_2*` subscriber classes depend on packaged Apex that's `@Deprecated` in `ver 5.0 (2GP)`.
+**NOTE:** The `Experiment_2*` subscriber classes depend on packaged Apex that was `@Deprecated` in `ver 5.0 (2GP)`.
 * In 1GP, this deployment would result in an Apex compile error.
 * In 2GP without **Version Settings** support, ALL global packaged Apex is visible to the subscriber, even when `@Deprecated`.
 
@@ -63,42 +62,21 @@ Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the follow
 ```
 sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
 ```
-**Observations:** 
-* Just as with 1GP, the packaged-global Apex is always implemented by logic in the most recently installed package version.
+**NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
+* Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
+* 
 
 ---
 
-#### 5. View the Class Summary for `GlobalConcreteTwo` in Setup.
-Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
-1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (2GP)` package.
+#### 5. View the Class Summary for `Experiment_2A` in Setup.
+Navigate to the **Apex Classes** page in Setup, then do the following.
+1. Open the `Experiment_2A` subscriber class.
+2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
+   * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
 
+![GlobalConcreteTwo Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
 
-
-
-4. Initialize a **new** 2GP subscriber org and directly install package `ver 6.0 (2GP)`.
-```
-./initSubscriber --2GP --first-version 6 --last-version 6
-```
-
-
-
-
-4. Upgrade to the installed package directly to `ver 6.0 (1GP)`.
-```
-./upgradeSubscriber --2GP --first-version 6 --last-version 6
-```
-5. Redeploy `Experiment_2*` subscriber classes, noting that all classes will fail to deploy.
-```
-sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
-```
-6. Retrieve `Experiment_2*` classes from the org. Use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
-```
-sf project retrieve start -m "ApexClass:Experiment_2*" --ignore-conflicts
-```
-7. Attempt to redeploy the `Experiment_2*` subscriber classes. Note success because the `.cls-meta.xml` files contain `<packageVersions>` information that "pins" each subscriber class to a specific managed package version.
-```
-sf project deploy start -m "ApexClass:Experiment_2*" --ignore-conflicts
-```
+---
 
 ## Key Takeaways
 * Applying **Version Settings** to a subscriber class impacts the compilation of the subscriber class.
