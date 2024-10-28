@@ -11,20 +11,17 @@ Managed 2GPs without **Version Settings** support have the following limitations
 
 ## Objectives of this Experiment
 
-* Observe how **Package Version Information** 
-* Observe how **Package Version** settings are completely missing  impact subscriber Apex with managed 1GP dependencies.
-* Observe how **Package Version** settings can prevent compile errors with subscriber Apex.
-* Observe that behavior of packaged Apex is always driven by the most recent implementation, regardless of **Package Version** settings.
+* Learn about the subscriber impact of installing 2GPs that lack **Version Provider Information**.
+* Observe how the **Class Summary** for a 2GP managed-global Apex class differs from the 1GP example in [Experiment One](/EXPERIMENT_1.md).
+* Observe how **Package Version** settings for subscriber Apex are not available for installed 2GPs that lack **Version Provider Information**.
 
 ## Step-by-Step Overview
 
-1. Initialize a 1GP subscriber org and directly install package `ver 3.0 (1GP)`.
-2. Deploy subscriber Apex that depends on `global` Apex from package `ver 3.0 (1GP)`.
-3. Execute anonymous Apex to see what the packaged Apex is doing in `ver 3.0 (1GP)`.
-4. Upgrade directly from `ver 3.0 (1GP)` to `ver 6.0 (1GP)`, introducing `@Deprecated` Apex to the org.
-5. Attempt to redeploy subscriber Apex and observe compilation errors.
-6. Retrieve previously deployed subscriber Apex and observe changes to `.cls-meta.xml` files.
-7. Attempt to redeploy subscriber Apex again and observe success this time.
+1. Initialize a 2GP subscriber org and directly install package `ver 6.0 (1GP)`.
+2. Deploy subscriber Apex that depends on `@Deprecated` Apex from package `ver 6.0 (1GP)`.
+3. Try to identify `@Deprecated` global Apex from the **Class Summary** page in Setup.
+4. Execute anonymous Apex to see what the packaged Apex is doing in `ver 6.0 (1GP)`.
+5. View the **Class Summary** for a subscriber Apex class and observe differences from the 1GP example in [Experiment One](/EXPERIMENT_1.md).
 
 ## Detailed Instructions
 
@@ -64,7 +61,8 @@ sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
 ```
 **NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
 * Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
-* 
+
+![GlobalConcreteTwo Class Summary](images/Experiment_2_Debug_Output.png)
 
 ---
 
@@ -79,9 +77,8 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 ---
 
 ## Key Takeaways
-* Applying **Version Settings** to a subscriber class impacts the compilation of the subscriber class.
-* The logic executed by packaged Apex is always implemented by the most recent version.
-  * This can be observed by examining the changes in debug output between `ver 4.0 (1GP)` and `ver 6.0 (1GP)`.
-* Publishers wishing to preserve logic that provides backward-compatible output to subscribers must implement multiple code paths in their most recent package version.
-  * Publishers can do this by using the [Version Class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_version.htm) and the `System.requestVersion` method.
-  * For additional context, see [Versioning Apex Code Behavior](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_manpkgs_behavior.htm) in the Apex Developer Guide.
+* Prior to adding **Version Settings** support to 2GP, ALL packaged Apex was visible to subscribers, even `@Deprecated` Apex.
+* Subscribers had no way of knowing which parts of a Global Apex class a publisher may have deprecated.
+* As with 1GP, the logic executed by packaged Apex is always implemented by the most recent version.
+  * This was confirmed by observing debug output starting with the digit `6` because the implementation was inside `ver 6.0 (2GP)`.
+* Prior to adding **Version Settings** support to 2GP, publishers were unable to add provides backward-compatible output to subscribers because the `System.requestVersion()` method was unavailable in 2GP.
