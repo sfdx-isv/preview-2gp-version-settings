@@ -58,28 +58,45 @@ sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
+![Experiment_1* Class Compile Errors](images/Subscriber_Apex_Compile_Error_1GP_CLI.png)
+
 ---
 
-#### 5A. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
+#### 6A. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
 Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
 1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (1GP)` package.
-2. Selecting the **All Versions** filter shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
-3. The **"Available in Versions"** section is missing completely.
+2. Selecting the **All Versions** filter shows ALL of the methods in this class and opens the **Available in Versions** panel.
+3. Observe that the **Available in Versions** panel shows that `methodAltTwo(Integer, String)` is currently `@Deprecated`.
+   * The UI shows that this method is only available in versions `3.0` through `4.0`.
 
 ![GlobalConcreteTwo Class Summary (1GP)](images/Packaged_Apex_Class_Detail_1GP.png)
 
 ---
 
+#### 6B. Edit the Version Settings for `Experiment_1A` in Setup.
+Return to the list of all **Apex Classes** in Setup.
+1. Open the `Experiment_1A` class, click the **Edit** button, then open the **Version Settings** tab.
+2. Note the row for the `Version Provider Test (1GP)` managed package that's installed in the org.
+3. Note the `Experiment_1A` class can be "Pinned" to any package version between the first one installed (`4.0`) and the last one installed (`6.0`).
+   * In the org, each subscriber class was automatically pinned to the version it was installed in.
+   * Our local source files didn't have **Version Settings** information. That's why the last deployment attempt failed.
+   * In a subsequent step, you'll retrieve the Apex classes from the org and your local source will become deployable again.
 
-#### 5B. View the Class Summary for `Experiment_2A` in Setup.
-```
-sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
-```
+![Subscriber Apex Version Settings (1GP)](images/Subscriber_Apex_Version_Settings_1GP.png)
+
 ---
 
+#### 6C. Attempt to "Pin" `Experiment_1A` to version `6.0` in Setup.
+While still in Edit mode with `Experiment_1A`, attempt the following.
+1. Change the Version for `Version Provider Test (1GP)` to `6.0`, then click the **Quick Save** button.
+2. Observe the Compile Error, indicating dependence on a global method that's no longer visible.
+   * Click **Cancel** to exit once you've completed your observations.
 
+![Experiment_1A Class Compile Errors](images/Subscriber_Apex_Compile_Error_1GP.png)
 
-#### 6. Retrieve `Experiment_1*` classes from the org. Use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
+---
+
+#### 7. Retrieve `Experiment_1*` classes from the org. Use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
 ```
 sf project retrieve start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
