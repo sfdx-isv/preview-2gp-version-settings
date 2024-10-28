@@ -47,7 +47,7 @@ sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 
 ---
 
-#### 4. Upgrade to the installed package directly to `ver 6.0 (1GP)`.
+#### 4. Upgrade the installed package directly to `ver 6.0 (1GP)`.
 ```
 ./upgradeSubscriber --1GP --first-version 6 --last-version 6
 ```
@@ -118,6 +118,72 @@ sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 **NOTE:** This deployment attempt should succeed without any compile errors.
 
 ---
+
+#### 9. Execute `Experiment_1.apex` again, showing only `USER_DEBUG` log lines.
+```
+sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
+```
+**NOTE:** This experiment demonstrates that **Version Settings** are an Apex compiliation feature, and don't automatically change the implementation used by global Apex.
+* Even though all the `Experiment_1*` subscriber classes are pinned to versrion `4.0` of the installed package in this org, the behavior observed results from logic implemented in `ver 6.0 (1GP)` of the managed package.
+* This is because the ONLY implementation of a packaged class is the one in the currently installed package version.
+* If backwards-compatible output is required by subscribers, the package developer MUST implement custom logic to provide the different output based on the package version the subscriber decides to "pin" their class to.
+
+![Experiment 1 Debug Output with ver 4.0 (1GP) installed](images/Experiment_1_Debug_Output_2.png)
+
+---
+
+#### 10. Upgrade the installed package directly to `ver 7.0 (1GP)`.
+```
+./upgradeSubscriber --1GP --first-version 7 --last-version 7
+```
+**NOTE:** The method `methodAltTwo(Integer, String)` inside `v_provider_test__GlobalConcreteTwo` is modified in `ver 7.0 (1GP)`.
+* It uses the `System.requestVersion()` method to determine the package version the calling Apex is pinned to.
+* When you run `Experiment_1.apex` again, you'll see the output values from `methodAltTwo(Integer, String)` match the version that the subscriber Apex is pinned to.
+```
+    @Deprecated
+    global Integer methodAltTwo(Integer arg1, String arg2) {
+        // Get the package version
+        Version pinnedVersion = System.requestVersion();
+    
+        // Check the package version and return the appropriate value
+        switch on pinnedVersion.major() {
+            when 3 {
+                return 300;
+            }
+            when 4 {
+                return 400;
+            }
+            when 5 {
+                return 500;
+            }
+            when 6 {
+                return 600;
+            }
+            when 7 {
+                return 700;
+            }
+            when else {
+                return -1; // Default return value
+            }
+        }
+    }
+```
+---
+
+#### 11. Execute `Experiment_1.apex` again, showing only `USER_DEBUG` log lines.
+```
+sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
+```
+**NOTE:** This experiment demonstrates that **Version Settings** are an Apex compiliation feature, and don't automatically change the implementation used by global Apex.
+* Even though all the `Experiment_1*` subscriber classes are pinned to versrion `4.0` of the installed package in this org, the behavior observed results from logic implemented in `ver 6.0 (1GP)` of the managed package.
+* This is because the ONLY implementation of a packaged class is the one in the currently installed package version.
+* If backwards-compatible output is required by subscribers, the package developer MUST implement custom logic to provide the different output based on the package version the subscriber decides to "pin" their class to.
+
+![Experiment 1 Debug Output with ver 7.0 (1GP) installed](images/Experiment_1_Debug_Output_2.png)
+
+---
+
+
 
 ## Key Takeaways
 * Applying **Version Settings** to a subscriber class impacts the compilation of the subscriber class.
