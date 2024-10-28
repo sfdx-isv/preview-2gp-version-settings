@@ -174,21 +174,22 @@ sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
 sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 ```
-**NOTE:** This experiment demonstrates that **Version Settings** are an Apex compiliation feature, and don't automatically change the implementation used by global Apex.
-* Even though all the `Experiment_1*` subscriber classes are pinned to versrion `4.0` of the installed package in this org, the behavior observed results from logic implemented in `ver 6.0 (1GP)` of the managed package.
-* This is because the ONLY implementation of a packaged class is the one in the currently installed package version.
-* If backwards-compatible output is required by subscribers, the package developer MUST implement custom logic to provide the different output based on the package version the subscriber decides to "pin" their class to.
+**NOTE:** The results of this step show `System.requestVersion()` at work.
+* Since the `Experiment_1*` subscriber classes are pinned to versrion `4.0`, the updated implementation of `methodAltTwo(Integer, String)` inside `v_provider_test__GlobalConcreteTwo` results in `400` instead of `700`.
+* Note that the other return values, like `6` and `600000` *should* say `7` and `700000`. 
+  * The values are incorrect here because the demo creator forgot to change their implementations for `ver 7.0 (1GP)`.
 
-![Experiment 1 Debug Output with ver 7.0 (1GP) installed](images/Experiment_1_Debug_Output_2.png)
+![Experiment 1 Debug Output with ver 7.0 (1GP) installed](images/Experiment_1_Debug_Output_3.png) 
 
 ---
 
 
 
-## Key Takeaways
+## Conclusions & Key Takeaways
 * Applying **Version Settings** to a subscriber class impacts the compilation of the subscriber class.
 * The logic executed by packaged Apex is always implemented by the most recent version.
   * This can be observed by examining the changes in debug output between `ver 4.0 (1GP)` and `ver 6.0 (1GP)`.
+* Marking a method as `@Deprecated` does not prevent package developers from modifying the implementation of that method.
 * Publishers wishing to preserve logic that provides backward-compatible output to subscribers must implement multiple code paths in their most recent package version.
   * Publishers can do this by using the [Version Class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_version.htm) and the `System.requestVersion` method.
   * For additional context, see [Versioning Apex Code Behavior](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_manpkgs_behavior.htm) in the Apex Developer Guide.
