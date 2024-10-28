@@ -103,7 +103,7 @@ sf project retrieve start -m "ApexClass:Experiment_1*" --ignore-conflicts
 
 ---
 
-#### 7. Attempt to redeploy the `Experiment_1*` subscriber classes. Note success because the `.cls-meta.xml` files contain `<packageVersions>` information that "pins" each subscriber class to a specific managed package version.
+#### 8. Attempt to redeploy the `Experiment_1*` subscriber classes. Note success because the `.cls-meta.xml` files contain `<packageVersions>` information that "pins" each subscriber class to a specific managed package version.
 ```
 sf project deploy start -m "ApexClass:Experiment_1*" --ignore-conflicts
 ```
