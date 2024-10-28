@@ -46,7 +46,7 @@ export async function upgradeSubscriber1GP(firstVersionNum, lastVersionNum) {
   
   const orgAlias             = 'SubOrg:avp-test-1GP';
   const packageName          = 'AVP Test Package';
-  const packageVersionIds    = ['04tal000000LPkz', '04tal000000LS7l', '04tal000000LTOn', '04tal000000LdJJ', '04tal000000MxmD', '04tal00000143DF'];
+  const packageVersionIds    = ['04tal000000LPkz', '04tal000000LS7l', '04tal000000LTOn', '04tal000000LdJJ', '04tal000000MxmD', '04tal00000143DF', '04tal00000143DF'];
   const packageVersionNames  = ['ver 1.0 (1GP)', 'ver 2.0 (1GP)', 'ver 3.0 (1GP)', 'ver 4.0 (1GP)', 'ver 5.0 (1GP)', 'ver 6.0 (1GP)', 'ver 7.0 (1GP)'];
   const firstVersionNumber   = Number.isInteger(firstVersionNum) ? firstVersionNum : 1;
   const lastVersionNumber    = Number.isInteger(lastVersionNum)  ? lastVersionNum : packageVersionIds.length;
