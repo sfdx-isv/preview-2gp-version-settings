@@ -15,7 +15,8 @@
 // Import Internal Classes & Functions
 import { devOrgAlias, 
          devOrgConfigFile, 
-         packageDependencies }  from './toolbelt.mjs';
+         packageDependencies,
+         useFirefox }           from './toolbelt.mjs';
 import { TaskRunner }           from './sfdx-falcon/task-runner/index.mjs';
 import { SfdxTask }             from './sfdx-falcon/task-runner/sfdx-task.mjs';
 import { SfdxFalconError }      from './sfdx-falcon/error/index.mjs';
@@ -72,8 +73,8 @@ export async function buildPkgDevOrg(firstVersionNum, lastVersionNum) {
   //*
   // STEP THREE: Open the "Deployment Status" page in the scratch org in Firefox.
   tr.addTask(new SfdxTask(
-    `Open the Deployment Status page in the new scratch org in Firefox`,
-    `sf org open -b firefox -p lightning/setup/DeployStatus/home`,
+    `Open the Deployment Status page in the new scratch org${useFirefox ? ' in Firefox' : ''}`,
+    `sf org open ${useFirefox ? '-b firefox' : ''} -p lightning/setup/DeployStatus/home`,
     {suppressErrors: false}
   ));
   //*/

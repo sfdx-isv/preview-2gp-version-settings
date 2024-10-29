@@ -107,6 +107,10 @@ export const packageDependencies = SfdxUtils.getPackageDependencies(sfdxProjectJ
  */
 const firstVersionNum = argv['first-version'] ? parseInt(argv['first-version']) : 1;
 const lastVersionNum  = argv['last-version']  ? parseInt(argv['last-version'])  : null;
+/**
+ * Determine if Firefox should be the explicit target of Org Open commands, or if the default should be used.
+ */
+export const useFirefox = argv['firefox'] ? true : false;
 
 /** 
  * Determine which build script to run based on the command line arguments.

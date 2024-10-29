@@ -16,7 +16,8 @@
 // Import Internal Classes & Functions
 import { devOrgAlias, 
          devOrgConfigFile, 
-         packageDependencies }  from './toolbelt.mjs';
+         packageDependencies,
+         useFirefox }           from './toolbelt.mjs';
 import { TaskRunner }           from './sfdx-falcon/task-runner/index.mjs';
 import { SfdxTask }             from './sfdx-falcon/task-runner/sfdx-task.mjs';
 import { SfdxFalconError }      from './sfdx-falcon/error/index.mjs';
@@ -68,8 +69,8 @@ export async function upgradeSubscriber1GP(firstVersionNum, lastVersionNum) {
   //*
   // STEP TWO: Open the "Installed Packages" page in the scratch org in Firefox.
   tr.addTask(new SfdxTask(
-    `Open the Installed Packages setup page in Firefox`,
-    `sf org open -b firefox -p lightning/setup/ImportedPackage/home -o ${orgAlias}`,
+    `Open the Installed Packages setup page${useFirefox ? ' in Firefox' : ''}`,
+    `sf org open ${useFirefox ? '-b firefox' : ''} -p lightning/setup/ImportedPackage/home -o ${orgAlias}`,
     {suppressErrors: false, renderStdioOnError: true}
   ));
   //*/
