@@ -79,13 +79,14 @@ sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
 ---
 
 
-#### 6. View the Class Summary for `Experiment_3A` in Setup.
+#### 6A. View the Class Summary for `Experiment_3A` in Setup.
 Navigate to the **Apex Classes** page in Setup, then do the following.
 1. Open the `Experiment_3A` subscriber class.
-2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
-   * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
+2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package NOW appears and that `Experiment_3A` is currently "pinned" to version `6.0`.
+   * Note that ALL existing subscriber Apex was automatically pinned to version `6.0` of the `Version Provider Test (2GP)` package because that was the version installed in the subscriber org when the upgrade to `ver 7.0 (2GP)` happened.
+   * Subscriber Apex "pinned" to 2GP package versions that DO NOT support **Version Settings** will have the old 2GP behavior of seeing all global Apex, including all `@Deprecated` Apex.
 
-![Experiment_3A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
+![Experiment_3A Class Summary](images/Subscriber_Apex_Version_Settings_2GP_With_VPI.png)
 
 
 
