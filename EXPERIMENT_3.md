@@ -111,6 +111,17 @@ While still in **Edit** mode in the `Experiment_3A` class with the **Version Set
 
 ---
 
+#### 6D. Change the API Version of all `Experiment_3*` classes from `61.0` to `62.0`.
+While still in **Edit** mode in the `Experiment_3A` class with the **Version Settings** tab open, do the following.
+1. Change the Version for `Salesforce.com API` to `62.0`, then click the **Save** button.
+   * **IMPORTANT!** Repeat this action **inside setup** for the `Experiment_3B` and `Experiment_3C` subscriber classes.
+   * You MUST do this for all three `Experiment_3*` classes BEFORE moving to the next step in this experiment.
+   * This ensures the new 2GP-specific Apex metadata child `<packageId>` will be retrieved in the next step.
+
+![Experiment_3A Class Compile Success](images/Subscriber_Apex_API_Version_2GP.png)
+
+---
+
 #### 7. Retrieve `Experiment_3*` classes from the org, then use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
 ```
 sf project retrieve start -m "ApexClass:Experiment_3*" --ignore-conflicts
