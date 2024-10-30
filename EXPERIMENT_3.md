@@ -88,9 +88,26 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 
 ![Experiment_3A Class Summary](images/Subscriber_Apex_Version_Settings_2GP_With_VPI.png)
 
+---
 
+#### 6B. Attempt to "Pin" `Experiment_3A` to version `7.0` in Setup.
+While still on the `Experiment_3A` class, click the **Edit** button, then open the **Version Settings** tab.
+1. Change the Version for `Version Provider Test (2GP)` to `7.0`, then click the **Quick Save** button.
+2. Observe the Compile Error, indicating dependence on a global method that's no longer visible.
+
+![Experiment_3A Class Compile Errors](images/Subscriber_Apex_Compile_Error_2GP.png)
 
 ---
+
+#### 6C. Attempt to "Pin" `Experiment_3A` to version `5.0` in Setup.
+While still in **Edit** mode in the `Experiment_3A` class with the **Version Settings** tab open, do the following.
+1. Change the Version for `Version Provider Test (2GP)` to `5.0`, then click the **Quick Save** button.
+2. Observe there are NO Compile Errors, even though `Experiment_3A` depends on a global method that was `@Deprecated` in version `5.0`.
+
+![Experiment_3A Class Compile Errors](images/Subscriber_Apex_Compile_Error_2GP.png)
+
+---
+
 
 #### 3. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
 Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
