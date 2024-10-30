@@ -111,6 +111,24 @@ While still in **Edit** mode in the `Experiment_3A` class with the **Version Set
 
 ---
 
+#### 7. Retrieve `Experiment_3*` classes from the org, then use the **Source Control** panel to inspect changes to the `.cls-meta.xml` for each subscriber class.
+```
+sf project retrieve start -m "ApexClass:Experiment_3*" --ignore-conflicts
+```
+**NOTE:** Note the following after retrieving the `Experiment_1*` classes
+* Each of the `.cls-meta.xml` files for the `Experiment_1*` classes was modified.
+* Using the source compare view, you can see that `<packageVersions>` metadata is now present in your local source files.
+  * This change will allow you to successfully re-deploy these classes.
+* Note that when `<packageVersions>` metadata refers to a 1GP, it uses `<namespace>` to identify the package.
+  * As you'll see in [Experiment Three](/EXPERIMENT_3.md), the schema for `<packageVersions>` metadata changes slightly when referring to a 2GP.
+
+![Experiment_1A Now Has Version Settings Metadata](images/packageVersions_Metadata_1GP.png)
+
+---
+
+
+
+
 
 #### 3. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
 Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
