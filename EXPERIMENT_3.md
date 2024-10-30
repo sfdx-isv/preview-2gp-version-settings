@@ -118,7 +118,8 @@ While still in **Edit** mode in the `Experiment_3A` class with the **Version Set
    * You MUST do this for all three `Experiment_3*` classes BEFORE moving to the next step in this experiment.
    * This ensures the new 2GP-specific Apex metadata child `<packageId>` will be retrieved in the next step.
 
-![Experiment_3A Class Compile Success](images/Subscriber_Apex_API_Version_2GP.png)
+![Experiment_3A Class API Version 62.0](images/Subscriber_Apex_API_Version_2GP.png)
+![Experiment_3* Classes API Version 62.0](images/Subscriber_Apex_API_Version_2GP_All.png)
 
 ---
 
