@@ -38,9 +38,46 @@ Managed 2GPs WITH **Version Settings** support have the following capabilities:
 ```
 sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
 ```
-**NOTE:** The `Experiment_3*` subscriber classes depend on packaged Apex that was `@Deprecated` in `ver 5.0 (2GP)`.
-* In 1GP, this deployment would result in an Apex compile error.
-* In 2GP without **Version Settings** support, ALL global packaged Apex is visible to the subscriber, even when `@Deprecated`.
+**IMPORTANT!** If you have published a commercial 2GP app, the state of this subscriber org after deploying the `Experiment_3*` classes is similar the state of YOUR subscribers right before upgrading to a 2GP with **Version Settings** support.
+* The `Experiment_3*` subscriber classes depend on packaged Apex that was `@Deprecated` in `ver 5.0 (2GP)`.
+  * [EXPERIMENT ONE - Step 5](/EXPERIMENT_1.md#5-redeploy-experiment_1-subscriber-classes-noting-that-all-classes-will-fail-to-deploy) showed how in 1GP this deployment would have failed with a compile error.
+* Because package versions `ver 1.0 (2GP)` through `ver 6.0 (2GP)` WERE NOT built with **Version Settings** support, ALL global packaged Apex is visible to the subscriber, even when `@Deprecated`.
+  * [EXPERIMENT TWO - Step 3](/EXPERIMENT_2.md#3-view-the-class-summary-for-v_provider_test__globalconcretetwo-in-setup) showed what the lack of **Version Settings** looks like in the org. 
+
+---
+
+#### 3. Execute `Experiment_3.apex` showing only `USER_DEBUG` log lines.
+```
+sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
+```
+**NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
+* Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
+
+![Experiment 2 Debug Output](images/Experiment_2_Debug_Output.png)
+
+---
+
+#### 4. Upgrade the installed package directly to `ver 7.0 (2GP)`.
+```
+./upgradeSubscriber --2GP --first-version 7 --last-version 7
+```
+**NOTE:** Package version `ver 7.0 (2GP)` has the following characteristics.
+* The method `methodAltTwo(Integer, String)` inside `v_provider_test__GlobalConcreteTwo` includes the same .
+* It uses the `System.requestVersion()` method to determine the package version the calling Apex is pinned to.
+* When you run `Experiment_1.apex` again, you'll see the output values from `methodAltTwo(Integer, String)` match the version that the subscriber Apex is pinned to.
+
+---
+
+
+#### 5. View the Class Summary for `Experiment_2A` in Setup.
+Navigate to the **Apex Classes** page in Setup, then do the following.
+1. Open the `Experiment_2A` subscriber class.
+2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
+   * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
+
+![Experiment_2A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
+
+
 
 ---
 
@@ -51,27 +88,6 @@ Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the follow
 3. The **"Available in Versions"** section is missing completely.
 
 ![GlobalConcreteTwo Class Summary (2GP)](images/Packaged_Apex_Class_Detail_2GP.png)
-
----
-
-#### 4. Execute `Experiment_2.apex` showing only `USER_DEBUG` log lines.
-```
-sf apex run --file scripts/apex/Experiment_2.apex | grep USER_DEBUG
-```
-**NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
-* Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
-
-![Experiment 2 Debug Output](images/Experiment_2_Debug_Output.png)
-
----
-
-#### 5. View the Class Summary for `Experiment_2A` in Setup.
-Navigate to the **Apex Classes** page in Setup, then do the following.
-1. Open the `Experiment_2A` subscriber class.
-2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
-   * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
-
-![Experiment_2A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
 
 ---
 
