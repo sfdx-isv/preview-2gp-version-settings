@@ -55,7 +55,7 @@ sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
 **NOTE:** The subscriber dependencies on `@Deprecated` Apex still execute.
 * Just as with 1GP, packaged-global Apex is always implemented by logic in the most recently installed package version.
 
-![Experiment 2 Debug Output](images/Experiment_2_Debug_Output.png)
+![Experiment 2 Debug Output](images/Experiment_3_Debug_Output_1.png)
 
 ---
 
@@ -64,9 +64,17 @@ sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
 ./upgradeSubscriber --2GP --first-version 7 --last-version 7
 ```
 **NOTE:** Package version `ver 7.0 (2GP)` has the following characteristics.
-* The method `methodAltTwo(Integer, String)` inside `v_provider_test__GlobalConcreteTwo` includes the same .
-* It uses the `System.requestVersion()` method to determine the package version the calling Apex is pinned to.
-* When you run `Experiment_1.apex` again, you'll see the output values from `methodAltTwo(Integer, String)` match the version that the subscriber Apex is pinned to.
+* Package version `ver 7.0 (2GP)` was created WITH **Version Settings** support.
+* In `ver 7.0 (2GP)` the method `methodAltTwo(Integer, String)` inside `v_provider_test__GlobalConcreteTwo` was modified to use the `System.requestVersion()` method to determine the package version the calling Apex is pinned to.
+* When you run `Experiment_3.apex` again, output values from `methodAltTwo(Integer, String)` will match the version that the subscriber Apex is pinned to.
+
+---
+
+#### 5. Redeploy `Experiment_3*` subscriber classes, noting that all classes will fail to deploy.
+```
+sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
+```
+![Experiment_3* Class Compile Errors](images/Subscriber_Apex_Compile_Error_1GP_CLI.png)
 
 ---
 
