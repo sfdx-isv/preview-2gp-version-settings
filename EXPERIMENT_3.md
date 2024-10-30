@@ -102,9 +102,12 @@ While still on the `Experiment_3A` class, click the **Edit** button, then open t
 #### 6C. Attempt to "Pin" `Experiment_3A` to version `5.0` in Setup.
 While still in **Edit** mode in the `Experiment_3A` class with the **Version Settings** tab open, do the following.
 1. Change the Version for `Version Provider Test (2GP)` to `5.0`, then click the **Quick Save** button.
-2. Observe there are NO Compile Errors, even though `Experiment_3A` depends on a global method that was `@Deprecated` in version `5.0`.
+   * Observe there are NO Compile Errors, even though `Experiment_3A` depends on a global method that was `@Deprecated` in version `5.0`.
+   * Observe that versions `1.0` through `7.0` of the `Version Provider Test (2GP)` package are available options for "pinning".
+     * This is possible because you initialized this subscriber org using `./initSubscriber --2GP --first-version 1 --last-version 6` before updrading to `ver 7.0 (2GP)`.
+     * If you had initialized this subscriber org with `--first-version 3` instead of `--first-version 1`, you'd only see versions `3.0` through `7.0` as **Version Settings** options.
 
-![Experiment_3A Class Compile Errors](images/Subscriber_Apex_Compile_Error_2GP.png)
+![Experiment_3A Class Compile Success](images/Subscriber_Apex_Compile_Success_2GP.png)
 
 ---
 
