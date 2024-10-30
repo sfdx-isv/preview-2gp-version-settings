@@ -74,18 +74,18 @@ sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
 ```
 sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
 ```
-![Experiment_3* Class Compile Errors](images/Subscriber_Apex_Compile_Error_1GP_CLI.png)
+![Experiment_3* Class Compile CLI Errors](images/Subscriber_Apex_Compile_Error_2GP_CLI.png)
 
 ---
 
 
-#### 5. View the Class Summary for `Experiment_2A` in Setup.
+#### 6. View the Class Summary for `Experiment_3A` in Setup.
 Navigate to the **Apex Classes** page in Setup, then do the following.
-1. Open the `Experiment_2A` subscriber class.
+1. Open the `Experiment_3A` subscriber class.
 2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package does not appear.
    * This differs from the behavior observed in [Experiment One](/EXPERIMENT_1.md) when the subscriber depended on a 1GP instead of a 2GP.
 
-![Experiment_2A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
+![Experiment_3A Class Summary](images/Subscriber_Apex_Version_Settings_2GP.png)
 
 
 
