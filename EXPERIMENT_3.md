@@ -127,28 +127,21 @@ While still in **Edit** mode in the `Experiment_3A` class with the **Version Set
 ```
 sf project retrieve start -m "ApexClass:Experiment_3*" --ignore-conflicts
 ```
-**NOTE:** Note the following after retrieving the `Experiment_1*` classes
-* Each of the `.cls-meta.xml` files for the `Experiment_1*` classes was modified.
+**NOTE:** Note the following after retrieving the `Experiment_3*` classes
+* Each of the `.cls-meta.xml` files for the `Experiment_3*` classes was modified.
 * Using the source compare view, you can see that `<packageVersions>` metadata is now present in your local source files.
   * This change will allow you to successfully re-deploy these classes.
-* Note that when `<packageVersions>` metadata refers to a 1GP, it uses `<namespace>` to identify the package.
-  * As you'll see in [Experiment Three](/EXPERIMENT_3.md), the schema for `<packageVersions>` metadata changes slightly when referring to a 2GP.
+* Note that when `<packageVersions>` metadata refers to a 2GP, it uses `<packageId>` to identify the package.
+  * 2GP supports multiple packages with the same namespace, requiring more specificity than with 1GP.
+  * This differs from what you saw in [EXPERIMENT ONE - Step 7](/EXPERIMENT_1.md#7-retrieve-experiment_1-classes-from-the-org-use-the-source-control-panel-to-inspect-changes-to-the-cls-metaxml-for-each-subscriber-class), where the `<packageVersions>` metadata used a `<namespace>` child element instead of the `<packageId>` child element used with 2GPs.
+  * **IMPORTANT!** The new `<packageId>` element can only be used when the `<apiVersion>` is set to `62.0` or higher.
 
-![Experiment_1A Now Has Version Settings Metadata](images/packageVersions_Metadata_1GP.png)
+![Experiment_1A Now Has Version Settings Metadata](images/packageVersions_Metadata_2GP.png)
 
 ---
 
 
 
-
-
-#### 3. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
-Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
-1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (2GP)` package.
-2. The class summary shows ALL of the methods in this class, including `methodAltTwo(Integer, String)` which was `@Deprecated` in `ver 5.0 (2GP)`.
-3. The **"Available in Versions"** section is missing completely.
-
-![GlobalConcreteTwo Class Summary (2GP)](images/Packaged_Apex_Class_Detail_2GP.png)
 
 ---
 
