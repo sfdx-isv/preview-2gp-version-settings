@@ -1,4 +1,4 @@
-# Experiment Two: Subscriber Apex Depending on 2GP Without "Version Settings" Support
+# Experiment Two: Subscriber Apex Depending on a 2GP Without "Version Settings" Support
 
 This experiment demonstrates subscriber Apex interacting with global classes in a package version without **Version Settings** support.
 

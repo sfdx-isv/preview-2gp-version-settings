@@ -1,4 +1,4 @@
-# Experiment One: Subscriber Apex Depending on 1GP
+# Experiment One: Subscriber Apex Depending on a 1GP
 
 This experiment demonstrates how Salesforce’s “Package Versions” feature affects subscriber Apex in first-generation managed packages (1GP). 
 
