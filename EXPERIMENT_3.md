@@ -7,14 +7,14 @@ Managed 2GPs WITH **Version Settings** support have the following capabilities:
 1. Subscriber Apex classes and Visualforce components CAN be "pinned" to a specific version of the 2GP.
 2. Package versions that introduce `@Deprecated` dependencies WILL CAUSE compilation errors in Subscriber Apex unless...
    * The Subscriber class is "pinned" to a version where the dependency was not `@Deprecated`.
-   * The Subscriber class is "pinned" to an older package version that was created without **Version Settings** support.
+   * The Subscriber class is "pinned" to an older package version created without **Version Settings** support.
 3. Packaged Apex classes in 2GPs CAN USE the `System.requestVersion()` method now.
 
 ## Objectives of this Experiment
 
-* Learn about the subscriber impact of installing 2GPs that HAVE **Version Provider Information**.
-* Observe how the **Class Summary** for a 2GP managed-global Apex class NOW MATCHES the 1GP example in [Experiment One](/EXPERIMENT_1.md).
-* Observe how **Package Version** settings for subscriber Apex ARE available for installed 2GPs that have **Version Provider Information**.
+* Observe how Subscribers are impacted by **upgrading** to a 2GP version created with **Version Provider Information (VPI)**.
+* Observe how the **Class Summary** for a `global` Apex class from a **VPI-Enabled 2GP version** NOW MATCHES the 1GP example in [EXPERIMENT ONE](/EXPERIMENT_1.md).
+* Observe how the **Package Version** settings for Subscriber Apex ARE NOW available for **VPI-Enabled 2GP versions**.
 
 ## Step-by-Step Overview
 
