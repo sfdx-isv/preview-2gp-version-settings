@@ -85,9 +85,21 @@ sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
 
 ---
 
+#### 6A. View the Class Summary for `v_provider_test__GlobalConcreteTwo` in Setup.
+Open the `v_provider_test__GlobalConcreteTwo` class in Setup and note the following.
+1. The class `v_provider_test__GlobalConcreteTwo` was installed as part of the `Version Provider Test (2GP)` package.
+2. Selecting the **All Versions** filter shows ALL of the methods in this class and opens the **Available in Versions** panel.
+3. Observe that the **Available in Versions** panel shows that `methodAltTwo(Integer, String)` is currently `@Deprecated`.
+   * This method was actually deprecated in `ver 5.0 (2GP)`.
+   * Because that version was not **VPI-Enabled**, the method would still be visible if the Subscriber pins their class anywhere between versions `3.0` and `6.0`.
+   * That's why the UI shows this method as **Available in Versions** `3.0 - 6.0 (Deprecated)`
 
-#### 6A. View the Class Summary for `Experiment_3A` in Setup.
-Navigate to the **Apex Classes** page in Setup, then do the following.
+![GlobalConcreteTwo Class Summary (1GP)](images/Packaged_Apex_Class_Detail_2GP_VPI.png)
+
+---
+
+#### 6B. View the Class Summary for `Experiment_3A` in Setup.
+Return to the list of all **Apex Classes** in Setup.
 1. Open the `Experiment_3A` subscriber class.
 2. Switch to the **"Version Settings"** tab and observe that the `Version Provider Test (2GP)` package NOW appears and that `Experiment_3A` is currently "pinned" to version `6.0`.
    * Note that ALL existing subscriber Apex was automatically pinned to version `6.0` of the `Version Provider Test (2GP)` package because that was the version installed in the subscriber org when the upgrade to `ver 7.0 (2GP)` happened.
@@ -97,7 +109,7 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 
 ---
 
-#### 6B. Attempt to "Pin" `Experiment_3A` to version `7.0` in Setup.
+#### 6C. Attempt to "Pin" `Experiment_3A` to version `7.0` in Setup.
 While still on the `Experiment_3A` class, click the **Edit** button, then open the **Version Settings** tab.
 1. Change the Version for `Version Provider Test (2GP)` to `7.0`, then click the **Quick Save** button.
 2. Observe the Compile Error, indicating dependence on a global method that's no longer visible.
@@ -106,7 +118,7 @@ While still on the `Experiment_3A` class, click the **Edit** button, then open t
 
 ---
 
-#### 6C. Attempt to "Pin" `Experiment_3A` to version `5.0` in Setup.
+#### 6D. Attempt to "Pin" `Experiment_3A` to version `5.0` in Setup.
 While still in **Edit** mode in the `Experiment_3A` class with the **Version Settings** tab open, do the following.
 1. Change the Version for `Version Provider Test (2GP)` to `5.0`, then click the **Quick Save** button.
    * Observe there are NO Compile Errors, even though `Experiment_3A` depends on a global method that was `@Deprecated` in version `5.0`.
@@ -118,7 +130,7 @@ While still in **Edit** mode in the `Experiment_3A` class with the **Version Set
 
 ---
 
-#### 6D. Change the API Version of all `Experiment_3*` classes from `61.0` to `62.0`.
+#### 6E. Change the API Version of all `Experiment_3*` classes from `61.0` to `62.0`.
 While still in **Edit** mode in the `Experiment_3A` class with the **Version Settings** tab open, do the following.
 1. Change the Version for `Salesforce.com API` to `62.0`, then click the **Save** button.
    * **IMPORTANT!** Repeat this action **inside setup** for the `Experiment_3B` and `Experiment_3C` subscriber classes.
