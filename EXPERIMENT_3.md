@@ -16,11 +16,15 @@ Managed 2GPs WITH **Version Settings** support have the following capabilities:
 
 ## Step-by-Step Overview
 
-1. Initialize a 2GP subscriber org and directly install package `ver 6.0 (1GP)`.
-2. Deploy subscriber Apex that depends on `@Deprecated` Apex from package `ver 6.0 (1GP)`.
-3. Try to identify `@Deprecated` global Apex from the **Class Summary** page in Setup.
-4. Execute anonymous Apex to see what the packaged Apex is doing in `ver 6.0 (1GP)`.
-5. View the **Class Summary** for a subscriber Apex class and observe differences from the 1GP example in [Experiment One](/EXPERIMENT_1.md).
+1. Initialize a 2GP Subscriber org, installing package versions `ver 1.0 (2GP)` through `ver 6.0 (2GP)`.
+2. Deploy Subscriber Apex that depends on packaged Apex that was `@Deprecated` in package `ver 5.0 (2GP)`.
+3. Execute anonymous Apex, observing that Subscriber clases do not respect `@Deprecated` packaged Apex with 2GP.
+4. Upgrade directly to `ver 7.0 (2GP)`, a **VPI-Enabled 2GP version**.
+5. Attempt to redeploy Subscriber Apex and observe compilation errors.
+6. View/modify **Version Settings** for Subscriber Apex using Setup UI.
+7. Retrieve previously deployed subscriber Apex and observe changes to `.cls-meta.xml` files.
+8. Attempt to redeploy subscriber Apex again and observe success this time.
+9. Execute anonymous Apex again, observing how Subscriber Apex **Version Settings** impact behavior.
 
 ## Detailed Instructions
 
@@ -132,22 +136,55 @@ sf project retrieve start -m "ApexClass:Experiment_3*" --ignore-conflicts
 * Using the source compare view, you can see that `<packageVersions>` metadata is now present in your local source files.
   * This change will allow you to successfully re-deploy these classes.
 * Note that when `<packageVersions>` metadata refers to a 2GP, it uses `<packageId>` to identify the package.
-  * 2GP supports multiple packages with the same namespace, requiring more specificity than with 1GP.
-  * This differs from what you saw in [EXPERIMENT ONE - Step 7](/EXPERIMENT_1.md#7-retrieve-experiment_1-classes-from-the-org-use-the-source-control-panel-to-inspect-changes-to-the-cls-metaxml-for-each-subscriber-class), where the `<packageVersions>` metadata used a `<namespace>` child element instead of the `<packageId>` child element used with 2GPs.
   * **IMPORTANT!** The new `<packageId>` element can only be used when the `<apiVersion>` is set to `62.0` or higher.
+  * 2GP supports multiple packages with the same namespace, requiring more specificity than with 1GP.
+  * This differs from what you saw in [EXPERIMENT ONE - Step 7](/EXPERIMENT_1.md#7-retrieve-experiment_1-classes-from-the-org-use-the-source-control-panel-to-inspect-changes-to-the-cls-metaxml-for-each-subscriber-class), where the `<packageVersions>` metadata used a `<namespace>` child element to refer to the **Version Provider Test (1GP)** package.
 
 ![Experiment_1A Now Has Version Settings Metadata](images/packageVersions_Metadata_2GP.png)
 
 ---
 
-
-
+#### 8. Attempt to redeploy the `Experiment_3*` subscriber classes. Note success because the `.cls-meta.xml` files now contain `<packageVersions>` information that "pins" each subscriber class to version prior to `ver 7.0 (2GP)`.
+```
+sf project deploy start -m "ApexClass:Experiment_3*" --ignore-conflicts
+```
+**NOTE:** This deployment attempt should succeed without any compile errors.
 
 ---
 
-## Key Takeaways
-* Prior to adding **Version Settings** support to 2GP, ALL packaged Apex was visible to subscribers, even `@Deprecated` Apex.
-* Subscribers had no way of knowing which parts of a Global Apex class a publisher had marked as `@Deprecated`.
-* As with 1GP, the logic executed by packaged Apex is always implemented by the most recent version.
-  * This was confirmed by observing debug output starting with the digit `6` because the implementation was inside `ver 6.0 (2GP)`.
-* Prior to adding **Version Settings** support to 2GP, publishers were unable to add provides backward-compatible output to subscribers because the `System.requestVersion()` method was unavailable in 2GP.
+#### 9. Execute `Experiment_3.apex` again, showing only `USER_DEBUG` log lines.
+```
+sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
+```
+**NOTE:** This experiment demonstrates how **Subscriber Apex Version Settings** can be used to deliver different behavior with 2GP.
+* The `Experiment_3A` subscriber class is pinned to version `5.0` of the `Version Provider Test (2GP)` package.
+* The `Experiment_3C` subscriber class is pinned to version `6.0` of the same package.
+* The installed version of the `Version Provider Test (2GP)` package is currently `7.0`. 
+  * This version introduced logic that uses `System.requestVersion()` to change the output of the global `methodAltTwo(Integer, String)` inside of the global `v_provider_test__GlobalConcreteTwo` class.
+  * Observe how `Experiment_3A` returns `500` because you explicitly "pinned" this subscriber class to version `5.0` of the 2GP.
+  * Observe how `Experiment_3C` returns `600` because it was automatically "pinned" to version `6.0` when you upgraded the package installed in this org to `ver 7.0 (2GP)`.
+* This shows that 2GP developers can now satisfy subscribers requiring backward-compatible output for packaged `global` Apex that evolves over time, including being marked as `@Deprecated`.
+
+![Experiment 3 Debug Output with ver 7.0 (2GP) installed](images/Experiment_3_Debug_Output_2.png)
+
+---
+
+## Conclusions / Key Takeaways
+* Managed second-generation package versions (i.e., "2GP versions") created with **Version Provider Information (VPI)** support the use of **Version Settings** in Subscriber orgs once that **VPI-Enabled 2GP version** is installed.
+  * During the developer preview period, a special DevHub perm and a modified `package version create` process are required to build **VPI-Enabled 2GP versions**.
+  * Once this feature is Generally Available, **EVERY** new 2GP version will be created with **VPI-Enabled**.
+  * Once GA, this change will apply to all 2GPs, will not require opt-in or configuration changes, and can not be opted-out of.
+* When **upgrading** a Subscriber to a **VPI-Enabled package version**...
+  * Subscriber Apex classes with existing dependencies are automatically "pinned" to the highest version number prior to the upgraded package version.
+* When **installing** a **VPI-Enabled** package version into a new Subscriber...
+  * Subscriber Apex classes will have the option to "pin" to any installed versions.
+  * Classes not explicitly "pinned" to a specific version are compiled against the highest installed version (same as with 1GP).
+* When "pinned" to 2GP versions that **ARE NOT VPI-Enabled**...
+  * ALL `global` Apex added to the package BEFORE the **VPI-Enabled** version is visible to the Subscriber.
+  * Subscribers can build dependencies on ANY `global` Apex in the package, including `@Deprecated` Apex.
+* When "pinned" to 2GP versions that **ARE VPI-Enabled**...
+  * Packaged `global` Apex marked as `@Deprecated` is properly hidden from Subscriber Apex.
+  * Subscribers can not compile classes with dependencies on `@Deprecated` Apex from **VPI-Enabled** package versions.
+* For both 1GP and 2GP, the logic executed by packaged Apex is always implemented by the most recent package version.
+  * Publishers can leverage `System.requestVersion()` to create custom implementations that simulate prior versions IF the Publisher expects Subscribers to require backward-compatibility.
+
