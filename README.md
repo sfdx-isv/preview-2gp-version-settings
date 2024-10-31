@@ -40,10 +40,10 @@ sf config list
 ```
 Hopefully you'll see something like this:
 ```
-f===========================================
+f==================================================
 | Name           Location Value                 
-| ────────────── ──────── ────────────────── 
-| target-dev-hub Global   AliasForYourDevHub
+| ────────────── ──────── ───────────────────────── 
+| target-dev-hub Global   YourDevHubAliasOrUsername
 ```
 If you don't see something like the above, run this command from the root of your `preview-2gp-version-settings` directory.
 ```
