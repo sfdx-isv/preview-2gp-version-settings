@@ -56,11 +56,11 @@ If you require additional help, please review the [Salesforce DX Usernames and O
 
 These experiments demonstrate the behavior of Subscriber Apex that depends on `global` Apex installed via a managed package.
 
-The following scenarios are covered:
+The experiments can be completed in any order, but should be experienced sequentially for best results.
 
-* [Experiment One](/EXPERIMENT_1.md) - Subscriber depends on a managed 1GP
-* [Experiment Two](/EXPERIMENT_2.md) - Subscriber depends on a managed 2GP without VPI (Version Provider Information)
-* [Experiment Three](/EXPERIMENT_3.md) - Subscriber depends on a managed 2GP with VPI (Version Provider Information)
+* [EXPERIMENT ONE](/EXPERIMENT_1.md) - Subscriber depends on `global` Apex in a managed 1GP.
+* [EXPERIMENT TWO](/EXPERIMENT_2.md) - Subscriber depends on `global` Apex in a managed 2GP without **VPI (Version Provider Information)**.
+* [EXPERIMENT THREE](/EXPERIMENT_3.md) - Subscriber depends on `global` Apex in a managed 2GP with **VPI (Version Provider Information)**.
 
 # Questions or Feedback?
 
