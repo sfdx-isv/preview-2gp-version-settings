@@ -70,6 +70,6 @@ If you're part of the the Developer Preview for creating VPI-Enabled 2GPs, pleas
 
 # About the Author
 
-* [Vivek M. Chawla](@VivekMChawla) is a Product Management Director at Salesfoce.
+* [Vivek M. Chawla](https://github.com/VivekMChawla) is a Product Management Director at Salesfoce.
 * When not moonlighting with Packaging, Vivek is the PM for the Salesforce CLI.
 
