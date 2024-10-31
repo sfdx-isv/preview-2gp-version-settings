@@ -193,3 +193,7 @@ sf apex run --file scripts/apex/Experiment_1.apex | grep USER_DEBUG
 * Publishers wishing to preserve logic that provides backward-compatible output to subscribers must implement multiple code paths in their most recent package version.
   * Publishers can do this by using the [Version Class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_version.htm) and the `System.requestVersion` method.
   * For additional context, see [Versioning Apex Code Behavior](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_manpkgs_behavior.htm) in the Apex Developer Guide.
+
+## Next Steps
+
+Continue to [EXPERIMENT TWO](/EXPERIMENT_2.md) to learn about the Subscriber exeprience when depending on a managed 2GP version created **without** VPI (Version Provider Information).

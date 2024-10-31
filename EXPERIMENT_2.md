@@ -82,3 +82,7 @@ Navigate to the **Apex Classes** page in Setup, then do the following.
 * As with 1GP, the logic executed by packaged Apex is always implemented by the most recent version.
   * This was confirmed by observing debug output starting with the digit `6` because the implementation was inside `ver 6.0 (2GP)`.
 * Prior to adding **Version Settings** support to 2GP, publishers were unable to add provides backward-compatible output to subscribers because the `System.requestVersion()` method was unavailable in 2GP.
+
+## Next Steps
+
+Continue to [EXPERIMENT THREE](/EXPERIMENT_3.md) to learn about the Subscriber exeprience when depending on a managed 2GP version created **with** VPI (Version Provider Information).

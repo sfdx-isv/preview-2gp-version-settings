@@ -203,3 +203,21 @@ sf apex run --file scripts/apex/Experiment_3.apex | grep USER_DEBUG
 * For both 1GP and 2GP, the logic executed by packaged Apex is always implemented by the most recent package version.
   * Publishers can leverage `System.requestVersion()` to create custom implementations that simulate prior versions IF the Publisher expects Subscribers to require backward-compatibility.
 
+## Next Steps
+
+Congratulations! After completing these experiments you should have a hands-on understanding of how Subscribers use **Version Settings** to interact with managed 1GPs and 2GPs.
+
+Here are some ideas for additional experiments you can run on your own.
+
+* Initialize a subscriber org with a **VPI-Enabled 2GP version** as the `--first-version`.
+* View the [1GP and 2GP source](/package-source/) for the managed packages used in the experiments you ran.
+
+### Want to try this with your 2GP? Join the 2GP Version Settings developer preview!
+
+* Complete this [Developer Preview Participation Request Form](https://forms.gle/JfyxaQsFZarxfYAw8) to apply.
+
+## Thank You!
+
+Thanks for taking the time to learn about this important Apex and Packaging functionality.
+
+If you found value in these exercises, please share this repo with your colleagues.
