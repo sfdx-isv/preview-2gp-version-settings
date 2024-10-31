@@ -15,6 +15,7 @@ Managed 2GPs WITH **Version Settings** support have the following capabilities:
 * Observe how Subscribers are impacted by **upgrading** to a 2GP version created with **Version Provider Information (VPI)**.
 * Observe how the **Class Summary** for a `global` Apex class from a **VPI-Enabled 2GP version** NOW MATCHES the 1GP example in [EXPERIMENT ONE](/EXPERIMENT_1.md).
 * Observe how the **Package Version** settings for Subscriber Apex ARE NOW available for **VPI-Enabled 2GP versions**.
+* Observe how 2GP can now leverage `System.requestVersion()` to provide backward-compatible output from packaged `global` Apex.
 
 ## Step-by-Step Overview
 
