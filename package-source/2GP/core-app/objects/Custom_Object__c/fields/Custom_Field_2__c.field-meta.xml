@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Field_2__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Custom field that was added in ver 4.0 of the package with a length of 200.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Custom field that was added in ver 4.0 of the package with a length of 200.</inlineHelpText>
+    <label>Custom Field 2</label>
+    <length>200</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

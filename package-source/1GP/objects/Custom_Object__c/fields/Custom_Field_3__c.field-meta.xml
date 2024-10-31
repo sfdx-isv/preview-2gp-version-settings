@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Field_3__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field added in 6.0 BETA with a default value of Unchecked</description>
+    <externalId>false</externalId>
+    <label>Custom Field 3</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
