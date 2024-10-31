@@ -23,6 +23,6 @@ Experiment_3B experiment_3B = new Experiment_3B();
 System.debug('');
 System.debug('Executing Experiment_3C');
 System.debug('');
-Experiment_3C experiment_2C = new Experiment_3C();
+Experiment_3C experiment_3C = new Experiment_3C();
 
 System.debug('');
