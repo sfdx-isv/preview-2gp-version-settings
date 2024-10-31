@@ -1,4 +1,4 @@
-# Experiment Three: Subscriber Apex Depending on 2GP WITH "Version Settings" Support
+# Experiment Three: Subscriber Apex Depending on a 2GP WITH "Version Settings" Support
 
 This experiment demonstrates subscriber Apex interacting with global classes in a package version created WITH **Version Settings** support.
 
@@ -6,8 +6,8 @@ Managed 2GPs WITH **Version Settings** support have the following capabilities:
 
 1. Subscriber Apex classes and Visualforce components CAN be "pinned" to a specific version of the 2GP.
 2. Package versions that introduce `@Deprecated` dependencies WILL CAUSE compilation errors in Subscriber Apex unless...
-  * The Subscriber class is "pinned" to a version where the dependency was not `@Deprecated`.
-  * The Subscriber class is "pinned" to an older package version that was created without **Version Settings** support.
+   * The Subscriber class is "pinned" to a version where the dependency was not `@Deprecated`.
+   * The Subscriber class is "pinned" to an older package version that was created without **Version Settings** support.
 3. Packaged Apex classes in 2GPs CAN USE the `System.requestVersion()` method now.
 
 ## Objectives of this Experiment
